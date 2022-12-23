@@ -2,24 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <title>Title</title>
 </head>
 <body>
 <header>
-
+    <img class="img" src="assets/img/Logo.png" alt="Alura">
 </header>
 <main>
     <div id="content">
         <div id="canvas">
-            <canvas></canvas>
+            <canvas id="tela" width="600" height="330"></canvas>
+        </div>
+        <div id="inicio">
+            <input class="botao-inicio" type="button" value="Inicio">
+            <input class="botao-inicio" type="button" value="Inserir Palavra">
         </div>
         <div id="palavra">
             <div id="conteudo"></div>
             <div id="tracos"></div>
             <div id="erros"></div>
-            <div id="resultado"></div>
+            <div id="inicio">
+                <input class="botao-inicio" type="button" value="Novo Jogo">
+                <input class="botao-inicio" type="button" value="Desistir">
+            </div>
         </div>
     </div>
 </main>
@@ -27,5 +34,5 @@
 <footer>
 </footer>
 </body>
-<script rel="script" type="text/javascript" src="js/script.js"></script>
+<script rel="script" type="module" src="assets/js/script.js"></script>
 </html>

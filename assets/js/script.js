@@ -1,3 +1,13 @@
+import {
+    desenhaBase,
+    desenhaBracoDireito, desenhaBracoEsquerdo,
+    desenhaCabeca, desenhaPernaDireita, desenhaPernaEsquerda,
+    desenhaPost,
+    desenhaPostBaixo,
+    desenhaPostCima,
+    desenhaTronco, finalMessage
+} from "./canvas.js";
+
 const words = ['amor','cadeira','telepatia'];
 let indice = Math.round(Math.random() * (words.length - 1));
 const palavraEscolhida = words[indice].toUpperCase();
@@ -13,23 +23,23 @@ console.log(palavraEscolhida);
 let dTracos = document.querySelector('#tracos');
 let dconteudo = document.querySelector('#conteudo');
 let erradas = document.getElementById('erros');
-let dresultado = document.querySelector('#resultado');
 
-let formarPalavra = () => {
+export let formarPalavra = () => {
     let count = 1;
     while (count <= palavraEscolhida.length){
         let cTracos = document.createElement('div');
             cTracos.style.display = 'inline-block';
-            cTracos.style.borderTop = '3px solid black';
-            cTracos.style.width = '30px';
+            cTracos.style.borderTop = '4px solid black';
+            cTracos.style.width = '32px';
             cTracos.style.height = '20px';
+            cTracos.style.padding = '0px 1px';
             cTracos.style.marginLeft = '15px';
             dTracos.append(cTracos);
         palavraEmFormacao.push("\u005F");
         count += 1;
     }
 }
-let comparaLetra = (obj) => {
+export let comparaLetra = (obj) => {
 
     for (let [i, letter] of Object.entries(obj)) {
         palavraEmFormacao[i] = letter.toUpperCase();
@@ -43,10 +53,10 @@ let comparaLetra = (obj) => {
     let nodes = palavraEmFormacao.map(letra => {
         let lDiv = document.createElement('div');
             lDiv.style.display ='inline-block';
-            lDiv.style.width = '23px';
+            lDiv.style.width = '28px';
             lDiv.style.height = '20px';
-            lDiv.style.marginLeft = '15px';
-            lDiv.style.paddingLeft = '7px';
+            lDiv.style.padding = '0px 1px';
+            lDiv.style.marginLeft = '19px';
             lDiv.textContent = letra;
             if(letra === "\u005F"){
                 lDiv.style.color= 'transparent';
@@ -63,12 +73,15 @@ let comparaLetra = (obj) => {
     dconteudo.append(...nodes);
 
     if(acertos === palavraEscolhida.length) {
-         dresultado.textContent = 'Voce Ganhou';
+        let message = "Parabéns!!!";
+        message += "\n";
+        message += "Você ganhou";
+        finalMessage(message, "green");
     }
 }
 
 formarPalavra();
-letrasEncontradas = {};
+export let letrasEncontradas = {};
 
 document.onkeyup = e => {
 
@@ -91,11 +104,54 @@ document.onkeyup = e => {
         if (!letrasCertas.includes(e.key.toUpperCase())) {
             letrasErradas.push(e.key.toUpperCase());
             erradas.innerHTML = letrasErradas.join('  ');
+            desenhaBase();
             erros += 1;
+            switch (erros) {
+                case 1: {
+                    desenhaBase();
+                    break;
+                }
+                case 2: {
+                    desenhaPost();
+                    break;
+                }
+                case 3: {
+                    desenhaPostCima();
+                    break;
+                }
+                case 4: {
+                    desenhaPostBaixo();
+                    break;
+                }
+                case 5: {
+                    desenhaCabeca();
+                    break;
+                }
+                case 6: {
+                    desenhaTronco();
+                    break;
+                }
+                case 7: {
+                    desenhaBracoDireito();
+                    break;
+                }
+                case 8: {
+                    desenhaBracoEsquerdo();
+                    break;
+                }
+                case 9: {
+                    desenhaPernaDireita();
+                    break;
+                }
+                case 10: {
+                    desenhaPernaEsquerda();
+                    break;
+                }
+            }
         }
 
-        if (erros === 6){
-            dresultado.textContent = 'Fim de Jogo';
+        if (erros === 10){
+            finalMessage('Fim de Jogo','red');
             return null;
         }
 }

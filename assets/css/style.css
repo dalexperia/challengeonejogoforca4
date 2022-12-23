@@ -1,0 +1,69 @@
+header{
+    height: 50px;
+    padding-top:30px;
+    text-align: left;
+}
+.img {
+    display: inline-block;
+    height: 40px;
+}
+
+#content {
+    width: 900px;
+    position: relative;
+    padding-top: 30px;
+    margin: 0 auto;
+    text-align: center;
+}
+#canvas{
+    text-align: center;
+    margin: 0 auto;
+    display: none;
+}
+
+#inicio{
+    position: absolute;
+    margin: 200px 0 0 250px;
+    width: 50%;
+}
+
+.botao-inicio{
+    display: block;
+    padding: 10px 50px;
+    margin: 10px auto;
+}
+
+#palavra {
+    text-align: center;
+    display: none;
+}
+
+#conteudo {
+    display: block;
+    height: 40px;
+    margin-left: 10px;
+    font-family: Montserrat sans-serif;
+    font-size: 30px;
+}
+
+#tracos {
+    display: block;
+    height: 10px;
+    margin-left: 15px;
+    padding-top: 5px;
+}
+
+#erros {
+    display: block;
+    height: 40px;
+    padding-top: 15px;
+    margin-left: 30px;
+    font-family: Montserrat sans-serif;
+    font-size: 25px;
+}
+
+#resultado {
+    display: block;
+    height: 10px;
+    margin-left: 15px;
+}
