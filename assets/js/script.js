@@ -1,4 +1,5 @@
 import {
+    apagarTela,
     desenhaBase,
     desenhaBracoDireito, desenhaBracoEsquerdo,
     desenhaCabeca, desenhaPernaDireita, desenhaPernaEsquerda,
@@ -8,25 +9,44 @@ import {
     desenhaTronco, finalMessage
 } from "./canvas.js";
 
-const words = ['amor','cadeira','telepatia'];
-let indice = Math.round(Math.random() * (words.length - 1));
-const palavraEscolhida = words[indice].toUpperCase();
-const array = palavraEscolhida.split('');
+import * as buttons from './buttons.js'
+import {bNewGame} from "./buttons.js";
+
+let words = ['amor','cadeira','telepatia'];
+// let indice = Math.round(Math.random() * (words.length - 1));
+// const palavraEscolhida = words[indice].toUpperCase();
+// const array = palavraEscolhida.split('');
+
+export let choiceWord = () => {
+    let indice = Math.round(Math.random() * (words.length - 1));
+    return words[indice].toUpperCase();
+}
+
 let letrasCertas = [];
 let letrasErradas = [];
 let erros = 0;
 let acertos = 0;
 let palavraEmFormacao = [];
+let rPalavra = choiceWord();
 
-console.log(palavraEscolhida);
+console.log(rPalavra);
 // Divs criadas para separa o conteúdo
 let dTracos = document.querySelector('#tracos');
 let dconteudo = document.querySelector('#conteudo');
 let erradas = document.getElementById('erros');
-
-export let formarPalavra = () => {
+export let formarPalavra = (palavra) => {
     let count = 1;
-    while (count <= palavraEscolhida.length){
+    // const tracosExist = document.querySelector('[data-traco="tracos-atuais"]');
+    // if(tracosExist) {
+    //     alert('entrou');
+    //     tracosExist.remove();
+    // }
+
+    let pTraco = document.createElement('div');
+    pTraco.style.display = 'block';
+    pTraco.setAttribute('data-traco','tracos-atuais');
+
+    while (count <= palavra.length){
         let cTracos = document.createElement('div');
             cTracos.style.display = 'inline-block';
             cTracos.style.borderTop = '4px solid black';
@@ -34,11 +54,16 @@ export let formarPalavra = () => {
             cTracos.style.height = '20px';
             cTracos.style.padding = '0px 1px';
             cTracos.style.marginLeft = '15px';
-            dTracos.append(cTracos);
+            pTraco.append(cTracos);
         palavraEmFormacao.push("\u005F");
         count += 1;
     }
+
+    dTracos.append(pTraco);
 }
+
+formarPalavra(rPalavra);
+
 export let comparaLetra = (obj) => {
 
     for (let [i, letter] of Object.entries(obj)) {
@@ -72,7 +97,7 @@ export let comparaLetra = (obj) => {
 
     dconteudo.append(...nodes);
 
-    if(acertos === palavraEscolhida.length) {
+    if(acertos === rPalavra.length) {
         let message = "Parabéns!!!";
         message += "\n";
         message += "Você ganhou";
@@ -80,17 +105,17 @@ export let comparaLetra = (obj) => {
     }
 }
 
-formarPalavra();
 export let letrasEncontradas = {};
 
-document.onkeyup = e => {
-
+let click = (e, palavra) => {
+    console.log('Palavra em click: ' + palavra);
     for (let letter of letrasErradas.concat(letrasCertas)) {
             if (e.key.toUpperCase() === letter) {
                 console.log('Já foi digitada');
                 return null;
             }
         }
+        const array = palavra.split('');
         for (let [index, letter] of Object.entries({...array})) {
 
             if (e.key.toUpperCase() === letter) {
@@ -101,10 +126,32 @@ document.onkeyup = e => {
             }
         }
 
+        let dErros = document.createElement('div');
+            dErros.style.display = "block";
+            dErros.style.marginTop = '10px';
+            dErros.style.fontFamily = 'MontSerrat Sans-Serif';
+            dErros.style.fontSize = '18px';
+            dErros.setAttribute('data-erros','letras-erradas');
+
         if (!letrasCertas.includes(e.key.toUpperCase())) {
             letrasErradas.push(e.key.toUpperCase());
-            erradas.innerHTML = letrasErradas.join('  ');
-            desenhaBase();
+            let nodeErros = letrasErradas.map(letra => {
+                let cErro = document.createElement('div');
+                    cErro.style.display = 'inline-block';
+                    cErro.textContent = letra;
+                dErros.append(cErro);
+
+                return dErros;
+            })
+
+            const dErradas = document.querySelector('[data-erros="letras-erradas"]');
+            if(dErradas){
+                dErradas.remove();
+            }
+            erradas.append(...nodeErros);
+
+            //erradas.innerHTML = letrasErradas.join('  ');
+            // desenhaBase();
             erros += 1;
             switch (erros) {
                 case 1: {
@@ -156,4 +203,40 @@ document.onkeyup = e => {
         }
 }
 
+document.onkeydown = e => {
+    click(e, rPalavra);
+}
 
+let apagarCaracteres = () => {
+
+    letrasEncontradas = {};
+    letrasCertas = [];
+    letrasErradas = [];
+    palavraEmFormacao = [];
+    erros = 0;
+    acertos = 0;
+
+    const tracosExist = document.querySelector('[data-traco="tracos-atuais"]');
+    const wordsExist = document.querySelector('[data-js="letras-palavra"]');
+    const dErradas = document.querySelector('[data-erros="letras-erradas"]');
+
+    if(tracosExist) {
+        tracosExist.remove();
+    }
+
+    if(wordsExist) {
+        wordsExist.remove();
+    }
+
+    if(dErradas){
+        dErradas.remove();
+    }
+}
+
+bNewGame.onclick = () => {
+
+    apagarCaracteres();
+    rPalavra = choiceWord();
+    formarPalavra(rPalavra);
+    apagarTela();
+}

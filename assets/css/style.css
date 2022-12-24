@@ -21,7 +21,7 @@ header{
     display: none;
 }
 
-#inicio{
+#buttons-inicio, #buttons-game{
     position: absolute;
     margin: 200px 0 0 250px;
     width: 50%;
@@ -36,6 +36,12 @@ header{
 #palavra {
     text-align: center;
     display: none;
+}
+
+.botao-jogo{
+    display: block;
+    padding: 10px 50px;
+    margin: 10px auto;
 }
 
 #conteudo {

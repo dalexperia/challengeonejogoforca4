@@ -91,3 +91,7 @@ export let finalMessage = (message, color) => {
     pincel.beginPath();
     pincel.fillText(message, 380,200,200);
 }
+
+export let apagarTela = () => {
+    pincel.clearRect(0,0,tela.width, tela.height);
+}
