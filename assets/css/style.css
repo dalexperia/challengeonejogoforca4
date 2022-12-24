@@ -15,6 +15,13 @@ header{
     margin: 0 auto;
     text-align: center;
 }
+textarea {
+    margin: 0 auto;
+    width: 600px;
+    height: 330px;
+    resize: none;
+    display: none;
+}
 #canvas{
     text-align: center;
     margin: 0 auto;
@@ -24,6 +31,13 @@ header{
 #buttons-inicio, #buttons-game{
     position: absolute;
     margin: 200px 0 0 250px;
+    width: 50%;
+}
+
+#insert {
+    display: none;
+    position: absolute;
+    margin: -100px 0 0 100px;
     width: 50%;
 }
 

@@ -84,14 +84,12 @@ export let desenhaPernaEsquerda = () => {
     pincel.lineWidth = 4;
     pincel.stroke();
 }
-
 export let finalMessage = (message, color) => {
     pincel.font = '18px Montserrat';
     pincel.fillStyle = color;
     pincel.beginPath();
     pincel.fillText(message, 380,200,200);
 }
-
 export let apagarTela = () => {
     pincel.clearRect(0,0,tela.width, tela.height);
 }

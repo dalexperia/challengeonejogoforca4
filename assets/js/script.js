@@ -10,18 +10,20 @@ import {
 } from "./canvas.js";
 
 import * as buttons from './buttons.js'
-import {bNewGame} from "./buttons.js";
+import {bInsertNewWords, binsertWord, bNewGame} from "./buttons.js";
 
 let words = ['amor','cadeira','telepatia'];
-// let indice = Math.round(Math.random() * (words.length - 1));
-// const palavraEscolhida = words[indice].toUpperCase();
-// const array = palavraEscolhida.split('');
 
+/**
+ * Esta função retorna uma palavra aleatoria da lista words
+ * @returns {string}
+ */
 export let choiceWord = () => {
     let indice = Math.round(Math.random() * (words.length - 1));
     return words[indice].toUpperCase();
 }
 
+let textareaOn = false;
 let letrasCertas = [];
 let letrasErradas = [];
 let erros = 0;
@@ -29,18 +31,17 @@ let acertos = 0;
 let palavraEmFormacao = [];
 let rPalavra = choiceWord();
 
-console.log(rPalavra);
 // Divs criadas para separa o conteúdo
 let dTracos = document.querySelector('#tracos');
 let dconteudo = document.querySelector('#conteudo');
 let erradas = document.getElementById('erros');
+
+/**
+ * Esta função apenas forma os traços para a palavra escolhida
+ * @param {string} palavra  Parametro obrigatorio
+ */
 export let formarPalavra = (palavra) => {
     let count = 1;
-    // const tracosExist = document.querySelector('[data-traco="tracos-atuais"]');
-    // if(tracosExist) {
-    //     alert('entrou');
-    //     tracosExist.remove();
-    // }
 
     let pTraco = document.createElement('div');
     pTraco.style.display = 'block';
@@ -64,12 +65,16 @@ export let formarPalavra = (palavra) => {
 
 formarPalavra(rPalavra);
 
+/**
+ * Esta funcão recebe um objeto contendo as letras que foram corretas
+ * e preenche o array da palavra escolhida com as devidas posições
+ * @param {Object} obj  Parametro obrigatorio
+ */
 export let comparaLetra = (obj) => {
 
     for (let [i, letter] of Object.entries(obj)) {
         palavraEmFormacao[i] = letter.toUpperCase();
     }
-
     let pDiv = document.createElement('div');
     pDiv.style.display = 'block';
     pDiv.style.paddingTop = '17px';
@@ -104,11 +109,9 @@ export let comparaLetra = (obj) => {
         finalMessage(message, "green");
     }
 }
-
 export let letrasEncontradas = {};
-
 let click = (e, palavra) => {
-    console.log('Palavra em click: ' + palavra);
+
     for (let letter of letrasErradas.concat(letrasCertas)) {
             if (e.key.toUpperCase() === letter) {
                 console.log('Já foi digitada');
@@ -138,6 +141,8 @@ let click = (e, palavra) => {
             let nodeErros = letrasErradas.map(letra => {
                 let cErro = document.createElement('div');
                     cErro.style.display = 'inline-block';
+                    cErro.style.fontSize = "25px";
+                    cErro.style.padding = '10px';
                     cErro.textContent = letra;
                 dErros.append(cErro);
 
@@ -149,9 +154,6 @@ let click = (e, palavra) => {
                 dErradas.remove();
             }
             erradas.append(...nodeErros);
-
-            //erradas.innerHTML = letrasErradas.join('  ');
-            // desenhaBase();
             erros += 1;
             switch (erros) {
                 case 1: {
@@ -204,11 +206,18 @@ let click = (e, palavra) => {
 }
 
 document.onkeydown = e => {
-    click(e, rPalavra);
+    let regexLetters = new RegExp("[A-Za-z]",'g');
+    if (e.keyCode >= 8 && e.keyCode <= 46) return null;
+    if(textareaOn){
+        return null;
+    }else if(regexLetters.test(e.key)){
+        click(e, rPalavra);
+    }
 }
-
+/**
+ * Esta função tem com objetivo apenas limpar os dados preenchidos
+ */
 let apagarCaracteres = () => {
-
     letrasEncontradas = {};
     letrasCertas = [];
     letrasErradas = [];
@@ -231,12 +240,33 @@ let apagarCaracteres = () => {
     if(dErradas){
         dErradas.remove();
     }
+
+    apagarTela();
 }
 
 bNewGame.onclick = () => {
-
     apagarCaracteres();
     rPalavra = choiceWord();
     formarPalavra(rPalavra);
-    apagarTela();
+}
+
+binsertWord.onclick = () => {
+    textareaOn = true;
+    document.querySelector("#init-button").style.display = "none";
+    document.querySelector("#insert-word").style.display = "none";
+    document.querySelector("#insert").style.display = "block";
+    document.querySelector("#newWords").style.display = "block";
+}
+
+bInsertNewWords.onclick = () => {
+    textareaOn = false;
+    let newPalavras = document.querySelector("#newWords");
+    let novas = newPalavras.value.split(',');
+    novas.map(word => {
+        words.push(word.trim());
+    })
+    newPalavras.style.display = "none";
+    document.querySelector("#insert").style.display = "none";
+    document.querySelector("#init-button").style.display = "block";
+    document.querySelector("#insert-word").style.display = "block";
 }
