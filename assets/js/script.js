@@ -9,7 +9,6 @@ import {
     desenhaTronco, finalMessage
 } from "./canvas.js";
 
-import * as buttons from './buttons.js'
 import {bInsertNewWords, binsertWord, bNewGame} from "./buttons.js";
 
 let words = ['amor','cadeira','telepatia'];
@@ -259,8 +258,12 @@ binsertWord.onclick = () => {
 }
 
 bInsertNewWords.onclick = () => {
-    textareaOn = false;
     let newPalavras = document.querySelector("#newWords");
+    if(!newPalavras.value){
+        alert("Campo não pode ser vazio!");
+        return null;
+    }
+    textareaOn = false;
     let novas = newPalavras.value.split(',');
     novas.map(word => {
         words.push(word.trim());

@@ -34,11 +34,84 @@ textarea {
     width: 50%;
 }
 
+#init-button{
+    font-family: Montserrat sans-serif;
+    font-size: 20px;
+    padding: 10px 100px;
+    border-radius: 15px;
+    color: white;
+    background: #0a0a1a;
+}
+
+#init-button:hover{
+    font-size: 15px;
+    color: #0a0a1a;
+    background: white;
+    cursor: pointer;
+}
+
+#insert-word{
+    font-family: Montserrat sans-serif;
+    font-size: 20px;
+    padding: 10px 33px;
+    border-radius: 15px;
+}
+
+#insert-word:hover{
+    font-size: 15px;
+    color: white;
+    background: #0a0a1a;
+    cursor: pointer;
+}
+
+#new-game{
+    font-family: Montserrat sans-serif;
+    font-size: 20px;
+    padding: 10px 100px;
+    border-radius: 15px;
+    color: white;
+    background: #0a0a1a;
+}
+
+#new-game:hover{
+    font-size: 15px;
+    color: #0a0a1a;
+    background: white;
+    cursor: pointer;
+}
+
+#reset{
+    font-family: Montserrat sans-serif;
+    font-size: 20px;
+    padding: 10px 113px;
+    border-radius: 15px;
+}
+
+#reset:hover{
+    font-size: 15px;
+    color: white;
+    background: #0a0a1a;
+    cursor: pointer;
+}
+
 #insert {
+    font-family: Montserrat sans-serif;
+    font-size: 20px;
+    /*padding: 10px 100px;*/
+    border-radius: 15px;
+    color: white;
+    background: #0a0a1a;
     display: none;
     position: absolute;
     margin: -100px 0 0 100px;
     width: 50%;
+}
+
+#insert:hover{
+    font-size: 15px;
+    color: #0a0a1a;
+    background: white;
+    cursor: pointer;
 }
 
 .botao-inicio{
